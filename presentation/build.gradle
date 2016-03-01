@@ -3,6 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.fernandocejas.frodo'
 
 android {
+
   def globalConfiguration = rootProject.extensions.getByName("ext")
 
   compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
@@ -59,6 +60,7 @@ android {
 }
 
 dependencies {
+
   def presentationDependencies = rootProject.ext.presentationDependencies
   def presentationTestDependencies = rootProject.ext.presentationTestDependencies
   def developmentDependencies = rootProject.ext.developmentDependencies
@@ -77,7 +79,9 @@ dependencies {
   androidTestCompile presentationTestDependencies.mockito
   androidTestCompile presentationTestDependencies.dexmaker
   androidTestCompile presentationTestDependencies.dexmakerMockito
-  androidTestCompile presentationTestDependencies.espresso
+  androidTestCompile (presentationTestDependencies.espresso) {
+      exclude group: 'com.android.support', module: 'support-annotations'
+  }
   androidTestCompile presentationTestDependencies.testingSupportLib
 
   //Development
